@@ -8,13 +8,6 @@ services:
     image: ollama/ollama
     networks:
       - ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [ gpu ]
     volumes:
       - ./data/ollama:/root/.ollama
     ports:
@@ -52,10 +45,3 @@ services:
       - ollama
     networks:
       - ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-          - driver: nvidia
-            count: 1
-            capabilities: [gpu]         
