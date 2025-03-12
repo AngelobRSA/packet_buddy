@@ -40,6 +40,7 @@ RUN echo "==> Adding InstructorEmbedding ..." \
 
 COPY /packet_buddy /packet_buddy/
 COPY /scripts /scripts/
+COPY config.toml /root/.streamlit/config.toml
 
 RUN echo "==> Convert script..." \
   && dos2unix /scripts/startup.sh
