@@ -37,7 +37,8 @@ RUN echo "==> Adding requests ..." \
 RUN echo "==> Adding InstructorEmbedding ..." \
   && pip install --break-system-packages -U sentence-transformers==2.2.2 \
   && pip install --break-system-packages InstructorEmbedding
-
+  && pip install --break-system-packages huggingface-hub===0.24.0
+  
 COPY /packet_buddy /packet_buddy/
 COPY /scripts /scripts/
 COPY config/config.toml /root/.streamlit/config.toml
