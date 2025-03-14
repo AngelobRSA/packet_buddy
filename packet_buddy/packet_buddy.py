@@ -26,8 +26,9 @@ class AIMessage(Message):
 
 @st.cache_resource
 def load_model():
-    with st.spinner("Downloading Instructor XL Embeddings Model locally....please be patient"):
-        embedding_model=HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large", model_kwargs={"device": "cpu"})
+    with st.spinner("Downloading Sentence Transformers Embeddings Model locally..."):
+        from langchain_community.embeddings import HuggingFaceEmbeddings
+        embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2", model_kwargs={"device": "cpu"})
     return embedding_model
 
 # Function to generate priming text based on pcap data
