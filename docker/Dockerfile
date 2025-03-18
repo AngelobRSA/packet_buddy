@@ -35,7 +35,7 @@ RUN echo "==> Adding requests ..." \
   && pip install --break-system-packages requests
 
 RUN echo "==> Adding InstructorEmbedding ..." \
-  && pip install --break-system-packages -U sentence-transformers==2.2.2 \
+  && pip install --break-system-packages -U sentence-transformers \
   && pip install --break-system-packages InstructorEmbedding
 
 COPY /packet_buddy /packet_buddy/
