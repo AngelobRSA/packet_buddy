@@ -35,8 +35,14 @@ RUN echo "==> Adding requests ..." \
   && pip install --break-system-packages requests
 
 RUN echo "==> Adding InstructorEmbedding ..." \
+<<<<<<< HEAD
   && pip install --break-system-packages -U sentence-transformers \
   && pip install --break-system-packages InstructorEmbedding
+=======
+  && pip install --break-system-packages -U sentence-transformers==2.2.2 \
+  && pip install --break-system-packages InstructorEmbedding \
+  && pip install --break-system-packages huggingface-hub===0.24.0
+>>>>>>> bd6fdfe9ed3d1e1c71c0a2aa23a35bb934256a46
 
 COPY /packet_buddy /packet_buddy/
 COPY /scripts /scripts/
