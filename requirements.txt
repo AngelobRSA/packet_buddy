@@ -9,3 +9,4 @@ sentence-transformers==2.2.2
 InstructorEmbedding
 chromadb
 tiktoken
+huggingface-hub==0.24.0
