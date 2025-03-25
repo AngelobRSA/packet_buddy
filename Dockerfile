@@ -1,48 +1,16 @@
-FROM ubuntu:latest
+FROM python:3.11-slim
 
-ARG DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN echo "==> Upgrading apk and installing system utilities ...." \
- && apt -y update \
- && apt-get install -y wget \
- && apt-get -y install sudo
+RUN apt-get update && apt-get install -y \
+    wget sudo dos2unix tshark jq \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    
+WORKDIR /app
 
-RUN echo "==> Installing Python3 and pip ...." \  
- && apt-get install python3 -y \
- && apt install python3-pip -y
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY packet_buddy /app/packet_buddy/
+COPY config/config.toml /root/.streamlit/config.toml
 
-RUN echo "==> Install dos2unix..." \
-  && sudo apt-get install dos2unix -y 
-
-RUN echo "==> Install langchain requirements.." \
-  && pip install --break-system-packages -U --quiet langchain_experimental langchain langchain-community \
-  && pip install --break-system-packages chromadb \
-  && pip install --break-system-packages tiktoken
-
-RUN echo "==> Install jq.." \
-  && pip install --break-system-packages jq
-
-RUN echo "==> Install streamlit.." \
-  && pip install --break-system-packages streamlit --upgrade
-
-# Install tshark
-RUN apt-get update && apt-get install -y tshark
-
-RUN echo "==> Adding pyshark ..." \
-  && pip install --break-system-packages pyshark
-
-RUN echo "==> Adding requests ..." \
-  && pip install --break-system-packages requests
-
-RUN echo "==> Adding InstructorEmbedding ..." \
-  && pip install --break-system-packages -U sentence-transformers==2.2.2 \
-  && pip install --break-system-packages InstructorEmbedding 
-
-COPY /packet_buddy /packet_buddy/
-COPY /scripts /scripts/
-COPY /config/config.toml /root/.streamlit/config.toml
-
-RUN echo "==> Convert script..." \
-  && dos2unix /scripts/startup.sh
-
-CMD ["/bin/bash", "/scripts/startup.sh"]
+CMD ["streamlit", "run", "/app/packet_buddy/packet_buddy.py", "--server.port", "8505"]
