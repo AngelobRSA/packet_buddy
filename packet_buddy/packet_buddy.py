@@ -87,8 +87,17 @@ class ChatWithPCAP:
 
     def store_in_chroma(self):
         with st.spinner("Storing in Chroma..."):
-            # Now, pass this wrapper to Chroma.from_documents
-            self.vectordb = Chroma.from_documents(self.docs, self.embedding_model)
+            chroma_path = "/app/chromadb"  # Ensure persistent storage
+
+            # Ensure directory exists
+            os.makedirs(chroma_path, exist_ok=True)
+
+            # Now, pass this directory to Chroma
+            self.vectordb = Chroma.from_documents(
+                self.docs,
+                self.embedding_model,
+                persist_directory=chroma_path  # Forcing persistence
+            )
             self.vectordb.persist()
 
     def setup_conversation_memory(self):

@@ -5,9 +5,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     wget sudo dos2unix tshark jq \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-    
-WORKDIR /app
 
+WORKDIR /app
+RUN mkdir -p /app/chromadb
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY packet_buddy /app/packet_buddy/
